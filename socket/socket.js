@@ -7,7 +7,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ["chatbox-orpin.vercel.app"],
+    origin: ["https://chatbox-orpin.vercel.app"],
     methods: ["GET", "POST"],
   },
 });
