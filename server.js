@@ -17,6 +17,21 @@ const PORT = process.env.PORT || 5000;
 
 app.use(express.json()); // to parse the incoming requests with JSON payloads (from req.body)
 app.use(cookieParser());
+const allowedOrigins = [
+  "https://chatbox-mkfajd6h8-alfaizs-projects.vercel.app",
+];
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // Check if the origin is allowed or if it's a CORS preflight request
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  })
+);
 
 app.get("/", (req, res) => {
   res.send("This is a ChatBox Server");
