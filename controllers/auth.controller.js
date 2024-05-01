@@ -1,5 +1,7 @@
 import bcrypt from "bcryptjs";
 import User from "../models/user.model.js";
+import jwt from "jsonwebtoken";
+
 // import generateTokenAndSetCookie from "../utils/generateToken.js";
 
 export const signup = async (req, res) => {
@@ -33,7 +35,7 @@ export const signup = async (req, res) => {
       profilePic: gender === "male" ? boyProfilePic : girlProfilePic,
     });
 
-    if (newUser) {
+    if (newUser.save()) {
       // Generate JWT token here
       const token = jwt.sign(
         { username: newUser.username, _id: newUser._id },
