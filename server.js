@@ -12,24 +12,26 @@ import connectToMongoDB from "./db/connectToMongoDB.js";
 import { app, server } from "./socket/socket.js"; // Update the import statement
 
 dotenv.config();
-// PORT should be assigned after calling dotenv.config() because we need to access the env variables. Didn't realize while recording the video. Sorry for the confusion.
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json()); // to parse the incoming requests with JSON payloads (from req.body)
 app.use(cookieParser());
-const allowedOrigins = ["https://chatbox-orpin.vercel.app"];
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      // Check if the origin is allowed or if it's a CORS preflight request
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-  })
-);
+app.use(cors());
+
+// const allowedOrigins = ["https://chatbox-orpin.vercel.app"];
+// const allowedOrigins = ["http://localhost:3000"];
+// app.use(
+//   cors({
+//     origin: function (origin, callback) {
+//       // Check if the origin is allowed or if it's a CORS preflight request
+//       if (!origin || allowedOrigins.includes(origin)) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error("Not allowed by CORS"));
+//       }
+//     },
+//   })
+// );
 
 app.get("/", (req, res) => {
   res.send("This is a ChatBox Server");
